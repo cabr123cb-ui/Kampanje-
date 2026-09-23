@@ -1,24 +1,24 @@
-:root { --bg:#f5f3ee; --card:#fff; --text:#24231f; --muted:#77736b; --accent:#7ca66a; --accent2:#dfead8; --line:#e5e1d8; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--text); }
-  .wrap { max-width:620px; margin:auto; padding:24px 16px 40px; }
-  header { display:flex; justify-content:space-between; align-items:end; margin-bottom:20px; }
-  h1 { margin:0; font-size:28px; }
-  .week { color:var(--muted); margin-top:5px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; margin:12px 0; box-shadow:0 2px 8px #00000008; }
-  .row { display:flex; align-items:center; gap:12px; }
-  .name { flex:1; font-size:18px; font-weight:650; }
-  .count { min-width:38px; text-align:center; font-weight:700; }
-  button { border:0; cursor:pointer; }
-  .plus { width:44px; height:44px; border-radius:14px; background:var(--accent); color:white; font-size:26px; line-height:1; }
-  .minus { width:32px; height:32px; border-radius:10px; background:#eeeae2; color:#555; font-size:20px; }
-  .delete { background:transparent; color:#aaa; font-size:18px; padding:4px; }
-  .color { width:34px; height:34px; padding:0; border:0; border-radius:10px; background:transparent; cursor:pointer; }
-  .boxes { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
-  .box { width:20px; height:20px; border-radius:6px; background:#ece9e2; }
-  .box.on { background:var(--accent); }
-  .add { width:100%; margin-top:14px; padding:13px; border-radius:14px; background:var(--accent2); color:#36512d; font-weight:700; font-size:16px; }
-  .new { display:none; gap:8px; margin-top:10px; }
-  input { flex:1; border:1px solid var(--line); border-radius:12px; padding:12px; font-size:16px; }
-  .save { padding:0 16px; border-radius:12px; background:var(--accent); color:white; font-weight:700; }
-  .footer { text-align:center; color:var(--muted); font-size:13px; margin-top:22px; }
+
+:root{--bg:#f5f3ee;--card:#fff;--text:#24231f;--muted:#77736b;--line:#e5e1d8;--accent:#7ca66a;--accent2:#dfead8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:650px;margin:auto;padding:28px 16px 40px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:20px}
+h1{margin:0;font-size:30px}.week{margin-top:5px;color:var(--muted);font-size:18px}
+button{border:0;cursor:pointer;font:inherit}
+.newweek{background:var(--accent2);color:#36512d;border-radius:16px;padding:12px 16px;font-weight:750}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 2px 8px #00000008}
+.row{display:flex;align-items:center;gap:12px}.name{flex:1;font-size:19px;font-weight:700}
+.color{width:38px;height:38px;padding:0;border:0;border-radius:10px;background:transparent}
+.plus{width:48px;height:48px;border-radius:15px;background:var(--accent);color:white;font-size:30px;font-weight:700}
+.minus{width:36px;height:36px;border-radius:11px;background:#eeeae2;color:#555;font-size:22px}
+.count{min-width:28px;text-align:center;font-size:20px;font-weight:750}
+.delete{background:transparent;color:#aaa;font-size:22px;padding:4px}
+.boxes{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
+.box{width:21px;height:21px;border-radius:6px;background:#ece9e2}
+.add{width:100%;margin-top:14px;padding:15px;border-radius:16px;background:var(--accent2);color:#36512d;font-weight:750;font-size:17px}
+.new{display:none;gap:8px;margin-top:10px}.new input{flex:1;border:1px solid var(--line);border-radius:12px;padding:13px;font-size:16px}.save{padding:0 16px;border-radius:12px;background:var(--accent);color:#fff;font-weight:700}
+.history h2{margin:0 0 14px;font-size:20px}.history-empty{color:var(--muted)}
+.history-row{padding:11px 0;border-bottom:1px solid var(--line)}.history-row:last-child{border-bottom:0}
+.tag{display:inline-block;margin:5px 6px 0 0;padding:6px 9px;border-radius:10px}
+.footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
