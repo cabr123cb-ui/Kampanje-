@@ -26,3 +26,13 @@ Etter publisering får du en GitHub Pages-adresse som kan åpnes på mobilen.
 
 Appen bruker nettleserens `localStorage`. Det betyr at registreringene normalt blir liggende på samme enhet/nettleser, men de synkroniseres ikke automatisk mellom telefon og PC.
 
+
+## Installerbar app (PWA)
+
+Prosjektet inneholder `manifest.json`, `service-worker.js` og app-ikoner.
+Når prosjektet er publisert via GitHub Pages og åpnes over HTTPS, kan Chrome
+på Android tilby **Installer app**.
+
+Hvis Chrome fortsatt viser «Kan ikke installere denne appen», vent noen
+minutter etter en ny publisering og last siden helt på nytt. Service worker
+må være registrert før installasjon blir tilgjengelig.
