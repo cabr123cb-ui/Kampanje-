@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ee">
+  <meta name="description" content="En enkel treningslogg for kampanjeøvelser i hundetrening.">
+  <title>🧩 Kampanjeøvelser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>🧩 Kampanjeøvelser</h1>
+      <div class="week" id="week"></div>
+    </div>
+    <button class="add" style="width:auto;margin:0;padding:10px 14px" onclick="newWeek()">＋ Ny uke</button>
+  </header>
+  <div id="list"></div>
+  <div class="card">
+    <strong>📊 Ukehistorikk</strong>
+    <div id="history" style="margin-top:10px"></div>
+  </div>
+  <button class="add" onclick="showNew()">＋ Legg til kampanjeøvelse</button>
+  <div class="new" id="newBox">
+    <input id="newName" placeholder="Navn på øvelse">
+    <button class="save" onclick="addExercise()">Legg til</button>
+  </div>
+  <div class="footer">Trykk + hver gang du trener øvelsen. Ingen dagbok – bare antall treninger.</div>
+</div>
+
+const key = 'kampanjeovelser-v1';
+let saved = JSON.parse(localStorage.getItem(key) || 'null');
+let data = saved?.current || [
+  {name:'Innkalling', count:0, color:'#7ca66a'},
+  {name:'Kontakt', count:0, color:'#6b9bd1'},
+  {name:'Sitt på avstand', count:0, color:'#a27ac1'},
+  {name:'Gå pent', count:0, color:'#d99a5b'}
+];
+let history = saved?.history || [];
+
+
+function weekNumber(d=new Date()) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate()+4-day);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+  return Math.ceil((((date-yearStart)/86400000)+1)/7);
+}
+document.getElementById('week').textContent = 'Uke ' + weekNumber();
+
+function save(){ localStorage.setItem(key, JSON.stringify({current:data,history})); }
+function renderHistory(){
+  const el=document.getElementById('history');
+  if(!history.length){ el.innerHTML='<span style="color:#77736b">Ingen tidligere uker ennå.</span>'; return; }
+  el.innerHTML=history.slice().reverse().map(h =>
+    `<div style="padding:10px 0;border-bottom:1px solid #e5e1d8">
+      <strong>Uke ${h.week}</strong>
+      <div style="margin-top:5px">${h.items.map(x=>`<span style="display:inline-block;margin:3px 6px 3px 0;padding:5px 8px;border-radius:9px;background:${x.color}22;color:#333">${escapeHtml(x.name)}: <b>${x.count}</b></span>`).join('')}</div>
+    </div>`).join('');
+}
+function render(){
+  const list=document.getElementById('list');
+  list.innerHTML='';
+  data.forEach((x,i)=>{
+    const card=document.createElement('div'); card.className='card';
+    const row=document.createElement('div'); row.className='row';
+    if(!x.color) x.color='#7ca66a';
+    row.innerHTML=`<div class="name">${escapeHtml(x.name)}</div>
+      <input class="color" type="color" value="${x.color}" title="Velg farge" onchange="setColor(${i},this.value)">
+      <button class="minus" onclick="change(${i},-1)">−</button>
+      <div class="count">${x.count}</div>
+      <button class="plus" onclick="change(${i},1)">+</button>
+      <button class="delete" title="Fjern øvelse" onclick="removeExercise(${i})">✕</button>`;
+    card.appendChild(row);
+    const boxes=document.createElement('div'); boxes.className='boxes';
+    for(let n=0;n<Math.max(10,x.count);n++){
+      const b=document.createElement('span'); b.className='box'+(n<x.count?' on':''); if(n<x.count) b.style.background=x.color; boxes.appendChild(b);
+    }
+    card.appendChild(boxes); list.appendChild(card);
+  });
+  renderHistory();
+}
+function change(i,delta){ data[i].count=Math.max(0,data[i].count+delta); save(); render(); }
+function setColor(i,color){ data[i].color=color; save(); render(); }
+function newWeek(){
+  const w=weekNumber();
+  history.push({week:w,items:data.map(x=>({name:x.name,count:x.count,color:x.color}))});
+  data=data.map(x=>({...x,count:0}));
+  save(); render();
+}
+function removeExercise(i){ if(confirm('Fjerne '+data[i].name+'?')){data.splice(i,1);save();render();} }
+function showNew(){ document.getElementById('newBox').style.display='flex'; document.getElementById('newName').focus(); }
+function addExercise(){
+  const input=document.getElementById('newName'); const name=input.value.trim();
+  if(!name) return;
+  data.push({name,count:0,color:'#7ca66a'}); input.value=''; document.getElementById('newBox').style.display='none'; save(); render();
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
+render();
+
+<script src="app.js"></script>
+</body>
+</html>
